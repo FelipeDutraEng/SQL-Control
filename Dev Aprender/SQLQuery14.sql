@@ -27,10 +27,6 @@ HAVING count(FirstName) > 10
 SELECT *
 FROM Person.Person
 
-SELECT FirstName, count(FirstName) as "quantidade"
-FROM person.Person
-GROUP BY FirstName
-HAVING count(FirstName) > 10
 
 -- Queremos saber quais produtos que no total de vendas estão entre 162k a 500k
 
@@ -53,8 +49,35 @@ WHERE Title = 'Mr.'
 GROUP BY FirstName
 HAVING count(FirstName) > 10
 
+/*
+DESAFIOS E SOLUÇÕES
+1. Estamos querendo identificar as provincias(stateProvinceId) com o maior número 
+de cadastros no nosso sistema, então é preciso encontrar quais províncias(stateProvinceId) 
+estão registradas no banco de dados mais que 1000 vezes. 
+
+2. Sendo que se trata de uma multinacional os gerentes querem saber quais produtos (productId) 
+não estão trazendo me média no mínimo 1 milhão em total de vendas (lineTotal)
+
+*/
+-- Resolução do Desafio 1
+
+SELECT *
+FROM Person.Address
+
+SELECT StateProvinceID, 
+COUNT (StateProvinceID) AS 'Qtd'
+FROM Person.Address
+GROUP BY StateProvinceID
+HAVING COUNT(AddressID) > 1000
 
 
+-- Resolução do Desafio 2
+
+SELECT *
+FROM Sales.SalesOrderDetail
 
 
-
+SELECT ProductID, AVG(LineTotal) AS 'Média Vendas'
+FROM Sales.SalesOrderDetail
+GROUP BY ProductID
+HAVING AVG(LineTotal) < 1000000
